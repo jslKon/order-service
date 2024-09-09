@@ -1,5 +1,21 @@
 # Customer App Design
 
+## Some standards that I follow before we start
+
+### Coding standards
+
+1/ Use same format style. I'm willing to use project's current format style though <br />
+2/ Always return DTO instead of entity directly to customer <br />
+3/ Always have a general response wrapper for API response <br />
+4/ I like to put all entity/domain object to a folder. For other layer (repos, facade, service, controller...) I put
+them package name based on domain.
+For example: OrderService, OrderRepository, OrderController -> order package <br />
+5/ Any editable entity should have metadata column like version, createdAt, createdBy...
+
+### Naming standards
+
+For naming, my only standard is that the variable/method/... names should describe them directly
+
 ## Component design
 
 ![customer_app_sequence_diagrams.png](img%2Fcustomer_app_sequence_diagrams.png)
