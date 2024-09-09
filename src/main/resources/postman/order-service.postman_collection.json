@@ -33,7 +33,9 @@
 							"\r",
 							"pm.test(\"Data itemIds array size is 3\", function () {\r",
 							"    pm.expect(response.data.itemIds.length).to.eql(3);\r",
-							"});"
+							"});\r",
+							"\r",
+							"pm.environment.set(\"newOrderId\", response.data.id); "
 						],
 						"type": "text/javascript",
 						"packages": {}
@@ -68,10 +70,10 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/v1/orders",
+					"raw": "http://{{domain}}:8080/api/v1/orders",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{domain}}"
 					],
 					"port": "8080",
 					"path": [
@@ -92,10 +94,6 @@
 						"exec": [
 							"const response = pm.response.json();\r",
 							"\r",
-							"pm.test(\"Data id is 744491bb-4610-4c5a-84b7-141a84170eca\", function () {\r",
-							"    pm.expect(response.data.id).to.eql(\"744491bb-4610-4c5a-84b7-141a84170eca\");\r",
-							"});\r",
-							"\r",
 							"pm.test(\"Data customerId is 2f2675ee-f5ad-4e71-bef8-4d729d8c3744\", function () {\r",
 							"    pm.expect(response.data.customerId).to.eql(\"2f2675ee-f5ad-4e71-bef8-4d729d8c3744\");\r",
 							"});\r",
@@ -108,8 +106,8 @@
 							"    pm.expect(response.data.status).to.eql(\"WAIT_FOR_CONFIRM\");\r",
 							"});\r",
 							"\r",
-							"pm.test(\"Data itemIds is ['item1', 'item2']\", function () {\r",
-							"    pm.expect(response.data.itemIds).to.eql([\"item1\", \"item2\"]);\r",
+							"pm.test(\"Data itemIds is ['item1', 'item2', 'item3']\", function () {\r",
+							"    pm.expect(response.data.itemIds).to.eql([\"item1\", \"item2\", \"item3\"]);\r",
 							"});\r",
 							""
 						],
@@ -137,17 +135,17 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/orders/744491bb-4610-4c5a-84b7-141a84170eca",
+					"raw": "http://{{domain}}:8080/api/v1/orders/{{newOrderId}}",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{domain}}"
 					],
 					"port": "8080",
 					"path": [
 						"api",
 						"v1",
 						"orders",
-						"744491bb-4610-4c5a-84b7-141a84170eca"
+						"{{newOrderId}}"
 					]
 				}
 			},
@@ -190,17 +188,17 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/orders/744491bb-4610-4c5a-84b7-141a84170eca?itemIds=item1",
+					"raw": "http://{{domain}}:8080/api/v1/orders/{{newOrderId}}?itemIds=item1",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{domain}}"
 					],
 					"port": "8080",
 					"path": [
 						"api",
 						"v1",
 						"orders",
-						"744491bb-4610-4c5a-84b7-141a84170eca"
+						"{{newOrderId}}"
 					],
 					"query": [
 						{
@@ -249,17 +247,17 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/orders/744491bb-4610-4c5a-84b7-141a84170eca/status?status=QUEUING",
+					"raw": "http://{{domain}}:8080/api/v1/orders/{{newOrderId}}/status?status=QUEUING",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{domain}}"
 					],
 					"port": "8080",
 					"path": [
 						"api",
 						"v1",
 						"orders",
-						"744491bb-4610-4c5a-84b7-141a84170eca",
+						"{{newOrderId}}",
 						"status"
 					],
 					"query": [
@@ -313,17 +311,17 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/orders/744491bb-4610-4c5a-84b7-141a84170eca",
+					"raw": "http://{{domain}}:8080/api/v1/orders/{{newOrderId}}",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{domain}}"
 					],
 					"port": "8080",
 					"path": [
 						"api",
 						"v1",
 						"orders",
-						"744491bb-4610-4c5a-84b7-141a84170eca"
+						"{{newOrderId}}"
 					]
 				}
 			},
@@ -366,10 +364,10 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/v1/orders/7034dcfa-5adc-4c70-acc0-cdb3f25cfa8d",
+					"raw": "http://{{domain}}:8080/api/v1/orders/7034dcfa-5adc-4c70-acc0-cdb3f25cfa8d",
 					"protocol": "http",
 					"host": [
-						"localhost"
+						"{{domain}}"
 					],
 					"port": "8080",
 					"path": [
@@ -377,6 +375,131 @@
 						"v1",
 						"orders",
 						"7034dcfa-5adc-4c70-acc0-cdb3f25cfa8d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid args create order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response status is BAD_REQUEST\", function () {\r",
+							"    pm.expect(response.status).to.eql(\"BAD_REQUEST\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Data array contains both 'shopId must not be null' and 'customerId must not be null'\", function () {\r",
+							"    pm.expect(response.data).to.eql([\r",
+							"        \"customerId must not be null\"\r",
+							"    ]);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"shopId\" : \"365d106a-5ec4-4504-84c2-c59231762e03\",\r\n    \"status\" : \"WAIT_FOR_CONFIRM\",\r\n    \"itemIds\" : [\r\n        \"item1\",\r\n        \"item2\",\r\n        \"item3\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{domain}}:8080/api/v1/orders",
+					"protocol": "http",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get orders by customer ids",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Response status is OK\", function () {\r",
+							"    pm.expect(response.status).to.eql(\"OK\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Content array is not null\", function () {\r",
+							"    pm.expect(response.data.orderDtoPage.content).to.not.be.null;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "admin",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "admin",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{domain}}:8080/api/v1/orders/customers/2f2675ee-f5ad-4e71-bef8-4d729d8c3744",
+					"protocol": "http",
+					"host": [
+						"{{domain}}"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"orders",
+						"customers",
+						"2f2675ee-f5ad-4e71-bef8-4d729d8c3744"
 					]
 				}
 			},
