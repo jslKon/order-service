@@ -2,11 +2,13 @@ package com.example.coffeeshop.order;
 
 import com.example.coffeeshop.common.constants.Routes;
 import com.example.coffeeshop.dto.GeneralResponse;
+import com.example.coffeeshop.dto.order.CustomerOrderDto;
 import com.example.coffeeshop.dto.order.OrderDto;
 import com.example.coffeeshop.entity.OrderEntity;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,18 @@ public class OrderController {
     public GeneralResponse<OrderDto> getOderById(@PathVariable("orderId") UUID orderId) {
         return GeneralResponse.<OrderDto>builder()
                 .data(orderService.findOrderById(orderId))
+                .timestamp(OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.UTC))
+                .status(HttpStatus.OK.name())
+                .build();
+    }
+
+    @GetMapping("/customers/{customerId}")
+    public GeneralResponse<CustomerOrderDto> getOderByCustomerId(@PathVariable("customerId") UUID customerId,
+                                                                 @RequestParam(value = "page", defaultValue = "0") int page,
+                                                                 @RequestParam(value = "size", defaultValue = "5") int size) {
+
+        return GeneralResponse.<CustomerOrderDto>builder()
+                .data(orderService.findOrdersByCustomerId(customerId, PageRequest.of(page, size)))
                 .timestamp(OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.UTC))
                 .status(HttpStatus.OK.name())
                 .build();

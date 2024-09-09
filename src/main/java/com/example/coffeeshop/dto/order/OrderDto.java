@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +14,7 @@ import java.util.UUID;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderDto implements Serializable {
+public class OrderDto {
 
     private UUID id;
 
@@ -29,4 +29,6 @@ public class OrderDto implements Serializable {
 
     @NotNull
     private List<String> itemIds;
+
+    private Timestamp createdAt;
 }

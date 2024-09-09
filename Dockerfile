@@ -6,7 +6,7 @@ COPY pom.xml .
 COPY src ./src
 
 RUN mvn dependency:go-offline
-RUN mvn clean install -Dmaven.test.skip=true
+RUN mvn clean install
 
 # Second stage: Run the application using a smaller JDK base image
 FROM openjdk:17-jdk-slim

@@ -1,10 +1,13 @@
 package com.example.coffeeshop.order;
 
 import com.example.coffeeshop.common.exception.BusinessException;
+import com.example.coffeeshop.dto.order.CustomerOrderDto;
 import com.example.coffeeshop.dto.order.OrderDto;
 import com.example.coffeeshop.entity.OrderEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,6 +30,17 @@ public class OrderServiceImpl implements OrderService {
         );
 
         return orderMapper.toDto(orderEntity);
+    }
+
+    @Override
+    public CustomerOrderDto findOrdersByCustomerId(UUID customerId, Pageable pageable) {
+        Page<OrderDto> orderDtoPage = orderRepository.findByCustomerIdOrderByCreatedAtDesc(customerId, pageable)
+                .map(orderMapper::toDto);
+
+        return CustomerOrderDto.builder()
+                .customerId(customerId)
+                .orderDtoPage(orderDtoPage)
+                .build();
     }
 
     @Override
