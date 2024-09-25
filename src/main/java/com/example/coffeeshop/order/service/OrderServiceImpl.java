@@ -1,9 +1,12 @@
-package com.example.coffeeshop.order;
+package com.example.coffeeshop.order.service;
 
 import com.example.coffeeshop.common.exception.BusinessException;
-import com.example.coffeeshop.dto.order.CustomerOrderDto;
-import com.example.coffeeshop.dto.order.OrderDto;
-import com.example.coffeeshop.entity.OrderEntity;
+import com.example.coffeeshop.common.loghelper.LogExecutionTime;
+import com.example.coffeeshop.order.dto.CustomerOrderDto;
+import com.example.coffeeshop.order.dto.OrderDto;
+import com.example.coffeeshop.order.entity.OrderEntity;
+import com.example.coffeeshop.order.mapper.OrderMapper;
+import com.example.coffeeshop.order.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,6 +26,10 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
 
     @Override
+    @LogExecutionTime(
+            messages = "Found order with id %s",
+            params = { "[0]" }
+    )
     public OrderDto findOrderById(UUID orderId) {
 
         OrderEntity orderEntity = orderRepository.findById(orderId).orElseThrow(
@@ -33,6 +40,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @LogExecutionTime(
+            messages = "Found orders of customer with id %s",
+            params = { "[0]" }
+    )
     public CustomerOrderDto findOrdersByCustomerId(UUID customerId, Pageable pageable) {
         Page<OrderDto> orderDtoPage = orderRepository.findByCustomerIdOrderByCreatedAtDesc(customerId, pageable)
                 .map(orderMapper::toDto);
@@ -44,6 +55,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @LogExecutionTime(
+            messages = "Created order of customer's id %s",
+            params = { "[0]" }
+    )
     public OrderDto createOrder(OrderDto orderDto) {
 
         OrderEntity newOrder = orderRepository.save(
@@ -54,6 +69,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @LogExecutionTime(
+            messages = "Updated order id %s with status %s",
+            params = { "[0]", "[1]" }
+    )
     public OrderDto updateOrderStatus(UUID orderId, OrderEntity.Status status) {
 
         OrderEntity orderEntity = orderRepository.findById(orderId).orElseThrow(
@@ -66,6 +85,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @LogExecutionTime(
+            messages = "Updated order id %s with items %s",
+            params = { "[0]", "[1]" }
+    )
     public OrderDto updateOrderItems(UUID orderId, List<String> items) {
         OrderEntity orderEntity = orderRepository.findById(orderId).orElseThrow(
                 () -> new BusinessException("No order with id " + orderId + " found")
@@ -77,6 +100,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @LogExecutionTime(
+            messages = "Canceled order id %s",
+            params = { "[0]" }
+    )
     public OrderDto cancelOrder(UUID orderId) {
         OrderEntity orderEntity = orderRepository.findById(orderId).orElseThrow(
                 () -> new BusinessException("No order with id " + orderId + " found")

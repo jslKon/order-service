@@ -1,4 +1,4 @@
-package com.example.coffeeshop.entity;
+package com.example.coffeeshop.common;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

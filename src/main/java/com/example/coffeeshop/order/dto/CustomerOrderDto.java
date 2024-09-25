@@ -1,5 +1,6 @@
-package com.example.coffeeshop.dto.order;
+package com.example.coffeeshop.order.dto;
 
+import com.example.coffeeshop.order.dto.OrderDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

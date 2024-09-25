@@ -1,5 +1,6 @@
-package com.example.coffeeshop.entity;
+package com.example.coffeeshop.order.entity;
 
+import com.example.coffeeshop.common.BaseEntity;
 import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.Getter;

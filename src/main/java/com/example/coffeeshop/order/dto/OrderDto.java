@@ -1,4 +1,4 @@
-package com.example.coffeeshop.dto.order;
+package com.example.coffeeshop.order.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

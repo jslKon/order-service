@@ -1,7 +1,7 @@
-package com.example.coffeeshop.order;
+package com.example.coffeeshop.order.mapper;
 
-import com.example.coffeeshop.dto.order.OrderDto;
-import com.example.coffeeshop.entity.OrderEntity;
+import com.example.coffeeshop.order.entity.OrderEntity;
+import com.example.coffeeshop.order.dto.OrderDto;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

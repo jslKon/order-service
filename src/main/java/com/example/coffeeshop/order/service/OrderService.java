@@ -1,8 +1,8 @@
-package com.example.coffeeshop.order;
+package com.example.coffeeshop.order.service;
 
-import com.example.coffeeshop.dto.order.CustomerOrderDto;
-import com.example.coffeeshop.dto.order.OrderDto;
-import com.example.coffeeshop.entity.OrderEntity;
+import com.example.coffeeshop.order.dto.CustomerOrderDto;
+import com.example.coffeeshop.order.dto.OrderDto;
+import com.example.coffeeshop.order.entity.OrderEntity;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

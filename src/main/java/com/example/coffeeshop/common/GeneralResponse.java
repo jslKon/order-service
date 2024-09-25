@@ -1,4 +1,4 @@
-package com.example.coffeeshop.dto;
+package com.example.coffeeshop.common;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,10 +1,11 @@
-package com.example.coffeeshop.order;
+package com.example.coffeeshop.order.controller;
 
+import com.example.coffeeshop.common.GeneralResponse;
 import com.example.coffeeshop.common.constants.Routes;
-import com.example.coffeeshop.dto.GeneralResponse;
-import com.example.coffeeshop.dto.order.CustomerOrderDto;
-import com.example.coffeeshop.dto.order.OrderDto;
-import com.example.coffeeshop.entity.OrderEntity;
+import com.example.coffeeshop.order.dto.CustomerOrderDto;
+import com.example.coffeeshop.order.dto.OrderDto;
+import com.example.coffeeshop.order.entity.OrderEntity;
+import com.example.coffeeshop.order.service.OrderService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -34,7 +35,7 @@ public class OrderController {
                 .build();
     }
 
-    @GetMapping("/customers/{customerId}")
+    @GetMapping(Routes.CUSTOMER + "/{customerId}")
     public GeneralResponse<CustomerOrderDto> getOderByCustomerId(@PathVariable("customerId") UUID customerId,
                                                                  @RequestParam(value = "page", defaultValue = "0") int page,
                                                                  @RequestParam(value = "size", defaultValue = "5") int size) {
@@ -51,11 +52,11 @@ public class OrderController {
         return GeneralResponse.<OrderDto>builder()
                 .data(orderService.createOrder(orderDto))
                 .timestamp(OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.UTC))
-                .status(HttpStatus.OK.name())
+                .status(HttpStatus.CREATED.name())
                 .build();
     }
 
-    @PutMapping("/{orderId}")
+    @PatchMapping("/{orderId}")
     public GeneralResponse<OrderDto> updateOrderItems(
             @PathVariable("orderId") UUID orderId,
             @Valid @NotNull @RequestParam List<String> itemIds) {
@@ -66,7 +67,7 @@ public class OrderController {
                 .build();
     }
 
-    @PutMapping("/{orderId}/status")
+    @PatchMapping("/{orderId}/status")
     public GeneralResponse<OrderDto> updateOrderStatus(
             @PathVariable("orderId") UUID orderId,
             @RequestParam OrderEntity.Status status) {
@@ -83,7 +84,7 @@ public class OrderController {
         return GeneralResponse.<OrderDto>builder()
                 .timestamp(OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.UTC))
                 .data(orderService.cancelOrder(orderId))
-                .status(HttpStatus.OK.name())
+                .status(HttpStatus.NO_CONTENT.name())
                 .build();
     }
 }
