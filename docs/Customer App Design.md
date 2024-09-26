@@ -18,7 +18,11 @@ For naming, my only standard is that the variable/method/... names should descri
 
 ## Component design
 
-![customer_app_sequence_diagrams.png](img%2Fcustomer_app_sequence_diagrams.png)
+![customer_appcomponent_design.png](img%2Fcustomer_appcomponent_design.png)
+
+## Entity Diagram
+
+![customer_app_erd.png](img%2Fcustomer_app_erd.png)
 
 ## Use case diagram
 
@@ -124,7 +128,7 @@ curl -X GET "https://{domain}/orders/customers/{customerId}" \
 Change order status
 
 ```
-curl -X PUT https://{domain}/orders/{orderId}/status??status={status} \
+curl -X PATCH https://{domain}/orders/{orderId}/status??status={status} \
      -H "Authorization: Bearer your_jwt_token_here" \
      -H "Locale: en-US"
 ```

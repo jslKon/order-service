@@ -16,7 +16,7 @@
 							"const response = pm.response.json();\r",
 							"\r",
 							"pm.test(\"Response status is OK\", function () {\r",
-							"    pm.expect(response.status).to.eql(\"OK\");\r",
+							"    pm.expect(response.status).to.eql(\"CREATED\");\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Data status is WAIT_FOR_CONFIRM\", function () {\r",
@@ -185,7 +185,7 @@
 						}
 					]
 				},
-				"method": "PUT",
+				"method": "PATCH",
 				"header": [],
 				"url": {
 					"raw": "http://{{domain}}:8080/api/v1/orders/{{newOrderId}}?itemIds=item1",
@@ -244,7 +244,7 @@
 						}
 					]
 				},
-				"method": "PUT",
+				"method": "PATCH",
 				"header": [],
 				"url": {
 					"raw": "http://{{domain}}:8080/api/v1/orders/{{newOrderId}}/status?status=QUEUING",
@@ -280,7 +280,7 @@
 							"const response = pm.response.json();\r",
 							"\r",
 							"pm.test(\"Response status is OK\", function () {\r",
-							"    pm.expect(response.status).to.eql(\"OK\");\r",
+							"    pm.expect(response.status).to.eql(\"NO_CONTENT\");\r",
 							"});\r",
 							"\r",
 							"pm.test(\"Data status is CANCELED\", function () {\r",

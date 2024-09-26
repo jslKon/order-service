@@ -1,0 +1,86 @@
+@startuml
+
+package CustomerAppEntity as "Customer App Entity" {
+
+    entity User {
+        * UUID id;
+        --
+        String userName;
+        String mobileNumber;
+        String email;
+        DateTime createdAt;
+        DateTime updatedAt;
+    }
+
+    entity PaymentMethod {
+        * UUID id;
+        --
+        <<FK>> UUID userId;
+        String methodType;
+        DateTime createdAt;
+        DateTime updatedAt;
+        //additional data
+    }
+
+    entity Payment {
+        * UUID id;
+        --
+        <<FK>> UUID userId;
+        <<FK>> UUID orderId;
+        Decimal amount;
+        String status;
+        DateTime createdAt;
+        DateTime updatedAt;
+    }
+
+    entity UserAddress {
+        * UUID id;
+        --
+        <<FK>> UUID userId;
+        String addressName;
+        Double longitude;
+        Double latitude;
+        Boolean isPrimary;
+        DateTime createdAt;
+        DateTime updatedAt;
+    }
+
+    entity Order {
+        * UUID id;
+        --
+        <<FK>> UUID userId;
+        <<FK>> UUID shopId;
+        String status;
+        JSON itemIds;
+        DateTime createdAt;
+        DateTime updatedAt;
+    }
+
+    entity OrderEvent {
+        * UUID id;
+        --
+        <<FK>> UUID orderId;
+        String eventType;
+        String eventPayload;
+        DateTime createdAt;
+    }
+}
+
+package OutSystem as "Coffe Shop App" {
+    entity Shop {
+        * UUID id;
+        --
+        //additional data
+    }
+}
+
+User ||--o{ PaymentMethod : "has many"
+User ||--o{ Payment : "has many"
+User ||--o{ UserAddress : "has many"
+User ||--o{ Order : "has many"
+
+Order ||--o{ OrderEvent : "has many"
+
+Order }o--|| Shop : "has many"
+Payment ||--|| Order : "has one"
+@enduml

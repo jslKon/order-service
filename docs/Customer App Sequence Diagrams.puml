@@ -64,8 +64,8 @@ APIGateway -> CustomerApp : Return order info with status "Wait for Payment conf
 == Confirm an Order ==
 
 Customer -> CustomerApp : Click confirm order
-CustomerApp -> APIGateway : PUT /orders/{orderId}
-APIGateway -> OrderService : PUT /orders/{orderId}
+CustomerApp -> APIGateway : PATCH /orders/{orderId}
+APIGateway -> OrderService : PATCH /orders/{orderId}
 
 OrderService -> Queue: Send an event for Payment service to check if payment is available(enough money to proceed etc)
 Queue -> PaymentService: Consume event
