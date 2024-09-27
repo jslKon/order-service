@@ -56,8 +56,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @LogExecutionTime(
-            messages = "Created order of customer's id %s",
-            params = { "[0]" }
+            messages = "Created order of customer's id %s for customer id %s",
+            params = { "[0].id", "[0].customerId" }
     )
     public OrderDto createOrder(OrderDto orderDto) {
 
