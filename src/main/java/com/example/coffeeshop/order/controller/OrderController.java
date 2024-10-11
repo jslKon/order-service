@@ -9,6 +9,8 @@ import com.example.coffeeshop.order.service.OrderService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.MarkerManager;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,7 @@ import java.time.ZoneOffset;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping(value = Routes.ROOT)
 @RequiredArgsConstructor
@@ -28,6 +31,9 @@ public class OrderController {
 
     @GetMapping("/{orderId}")
     public GeneralResponse<OrderDto> getOderById(@PathVariable("orderId") UUID orderId) {
+        log.info(MarkerManager.getMarker("TEST").getName(), "Get order by id {}", orderId);
+        log.info(MarkerManager.getMarker("TEST1").getName(), "Fail");
+
         return GeneralResponse.<OrderDto>builder()
                 .data(orderService.findOrderById(orderId))
                 .timestamp(OffsetDateTime.of(LocalDateTime.now(), ZoneOffset.UTC))

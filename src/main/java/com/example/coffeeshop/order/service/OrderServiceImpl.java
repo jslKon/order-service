@@ -26,10 +26,6 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
 
     @Override
-    @LogExecutionTime(
-            messages = "Found order with id %s",
-            params = { "[0]" }
-    )
     public OrderDto findOrderById(UUID orderId) {
 
         OrderEntity orderEntity = orderRepository.findById(orderId).orElseThrow(

@@ -8,6 +8,6 @@ spring:
   liquibase:
     change-log: db/changelog/db.changelog-master.xml
 
-aspect:
-  time-execution:
+logging:
+  custom:
     enabled: true
