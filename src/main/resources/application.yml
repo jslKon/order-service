@@ -8,6 +8,7 @@ spring:
   liquibase:
     change-log: db/changelog/db.changelog-master.xml
 
+management.endpoints.web.exposure.include: health,info,refresh
+
 logging:
-  custom:
-    enabled: true
+  get-order: false

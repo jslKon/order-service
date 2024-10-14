@@ -1,6 +1,7 @@
 package com.example.coffeeshop.config;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.MarkerManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;

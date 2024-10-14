@@ -10,7 +10,12 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.MarkerManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.LoggerConfig;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -31,8 +36,16 @@ public class OrderController {
 
     @GetMapping("/{orderId}")
     public GeneralResponse<OrderDto> getOderById(@PathVariable("orderId") UUID orderId) {
-        log.info(MarkerManager.getMarker("TEST").getName(), "Get order by id {}", orderId);
-        log.info(MarkerManager.getMarker("TEST1").getName(), "Fail");
+        log.info("this should not be printed out : {}", "get-order");
+        MDC.put("taskName", "get-order");
+        MDC.put("traceId", UUID.randomUUID().toString());
+        log.info("this should be printed out : {}", "get-order");
+
+        Marker getOrder = MarkerFactory.getMarker("GET_ORDER");
+        Marker createOrder = MarkerFactory.getMarker("CREATE_ORDER");
+
+        log.info(getOrder, "get order {}", orderId);
+        log.info(createOrder, "create order {}", orderId);
 
         return GeneralResponse.<OrderDto>builder()
                 .data(orderService.findOrderById(orderId))
