@@ -2,8 +2,8 @@
 <Configuration status="INFO" monitorInverval="30">
 
     <Properties>
-        <!--        <Property name="get-order-log-enabled">${sys:logging.get-order.enabled}</Property>-->
-        <Property name="get-order-log-enabled">true</Property>
+        <Property name="get-order-log-enabled">false</Property>
+        <Property name="create-order-log-enabled">true</Property>
     </Properties>
 
     <Appenders>
@@ -14,25 +14,25 @@
         <Console name="TaskAppender" target="SYSTEM_OUT">
             <PatternLayout
                     pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level [%X{taskName}] [%X{traceId}] %logger{36} - %msg%n"/>
-            <Filters>
-                <MarkerFilter marker="GET_ORDER" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
-                <MarkerFilter marker="CREATE_ORDER" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
-            </Filters>
         </Console>
 
+        <Null name="NoopAppender"/>
+
         <Routing name="Routing">
-            <Routes pattern="$${ctx:taskName}">
-                <!-- This route is chosen if ThreadContext has no value for key jobId. -->
-                <Route key="get-order" ref="TaskAppender"/>
-                <!-- This is the default route when no others match -->
+            <Routes pattern="$${$${ctx:taskName}-log-enabled}">
+                <Route key="true" ref="TaskAppender"/>
+                <Route key="false" ref="NoopAppender"/>
                 <Route ref="DefaultAppender"/>
             </Routes>
         </Routing>
     </Appenders>
 
     <Loggers>
-        <Root level="info">
+        <Logger name="com.example.coffeeshop" level="debug">
             <AppenderRef ref="Routing"/>
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="DefaultAppender"/>
         </Root>
     </Loggers>
 

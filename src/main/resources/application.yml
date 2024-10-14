@@ -11,4 +11,5 @@ spring:
 management.endpoints.web.exposure.include: health,info,refresh
 
 logging:
-  get-order: false
+  get-order: true
+  create-order: false
